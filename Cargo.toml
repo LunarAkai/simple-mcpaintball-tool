@@ -1,0 +1,15 @@
+[package]
+name = "simple-pbt"
+version = "0.1.0"
+authors = ["LunarAkai <akai@lunarakai.de>"]
+license = "GPL-3"
+description = "A tool to easily analyze paintball events. Made for cubeside.de" 
+edition = "2021"
+keywords = ["cli"]
+categories = ["command-line-utilities"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.79"
+clap = { version = "4.5.0", features = ["derive"] }
