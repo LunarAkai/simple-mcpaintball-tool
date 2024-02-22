@@ -6,6 +6,8 @@ use std::path::Path;
 use clap::Parser;
 use anyhow::{Context, Result};
 
+// TODO: make code look less like spaghetti
+// TODO: bessere absicherung für mehrfaches pb list
 
 #[derive(PartialEq, Eq, Debug, Clone)]
 struct PaintballPlayer {
@@ -63,10 +65,7 @@ fn main() -> Result<()>{
     let mut pb_players: Vec<PaintballPlayer> = vec![];
 
     let args = Args::parse();
-    let _file = std::fs::read_to_string(&args.path).with_context(|| format!("could not read file '{}'", args.path.display()))?;
-
-    
-
+    let _ = std::fs::read_to_string(&args.path).with_context(|| format!("could not read file '{}'", args.path.display()))?;
 
     if let Ok(lines) = read_lines(&args.path) {
         for line in lines {
@@ -84,29 +83,16 @@ fn main() -> Result<()>{
                         };
                         pb_players.push(new_player.unwrap());
                     } else {
-                        // else 
-                        // get PaintballPlayer from player Name
-                        // to prevent that multiple /pb list commands affect round counter
-                        // if PaintballPlayer.get_rounds_played > pb_game.get_rounds 
-                        //      PaintballPlayer.add_player_rounds_played
                         let option = return_pb_player_from_vector(&pb_players, player_str.clone());
-                        let pb_player ;
+                        let pb_player;
                         match option {
                             Some(ref _v) => pb_player = option.unwrap(),
                             None => continue,
                         };
-                        if pb_player.get_rounds_played() < pb_game.get_rounds() {
+                        if pb_player.get_rounds_played() <= pb_game.get_rounds() {
                             update_vector(&mut pb_players, pb_player);
-                        }
-                        
-                        //pb_player.add_player_rounds_played();
-                        //println!("{:?}", pb_player.get_rounds_played());
-                        //println!("{:?}", pb_players);
-                        
-                    }
-                   
-
-                                        
+                        }                        
+                    }                                        
                 } else if _line.as_str().contains("Match status: Round started! GO GO GO!") {
                     pb_game.add_round();
                 }
@@ -122,15 +108,13 @@ fn main() -> Result<()>{
     
         for players in pb_players.iter() {
             if players.get_rounds_played() == i {
-                write!(handle, "{}, ", players.get_name())?;
+                write!(handle, "{} ", players.get_name())?;
             }
         }
         writeln!(handle,"")?;
 
         i = i-1;
     }
-    //println!("{:?}", pb_players);
-
     Ok(())
 }
 

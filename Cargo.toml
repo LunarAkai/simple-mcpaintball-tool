@@ -1,5 +1,5 @@
 [package]
-name = "simple-pbt"
+name = "simple-mcpaintball-tool"
 version = "0.1.0"
 authors = ["LunarAkai <akai@lunarakai.de>"]
 license = "GPL-3"
