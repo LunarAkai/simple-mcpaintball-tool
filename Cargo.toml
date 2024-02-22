@@ -2,7 +2,7 @@
 name = "simple-mcpaintball-tool"
 version = "0.1.0"
 authors = ["LunarAkai <akai@lunarakai.de>"]
-license = "GPL-3"
+license = "GPL-3.0"
 description = "A tool to easily analyze paintball events. Made for cubeside.de" 
 edition = "2021"
 keywords = ["cli"]
