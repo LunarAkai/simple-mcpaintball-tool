@@ -1,6 +1,6 @@
 [package]
 name = "simple-mcpaintball-tool"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["LunarAkai <akai@lunarakai.de>"]
 license = "GPL-3.0"
 description = "A tool to easily analyze paintball events. Made for cubeside.de" 

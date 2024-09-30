@@ -1,6 +1,6 @@
 use std::borrow::Borrow;
-use std::fmt::Debug;
-use std::fs::File;
+use std::fmt::{format, Debug};
+use std::fs::{read_to_string, File};
 use std::io::{self, BufRead, Write};
 use std::path::Path;
 use clap::Parser;
@@ -23,6 +23,8 @@ struct PaintballGame {
 #[command(version, about)]
 struct Args {
     path: std::path::PathBuf,
+    #[arg(short, long)]
+    time: bool,
 }
 
 #[derive(Debug)]
@@ -72,7 +74,11 @@ fn main() -> Result<()>{
             if let Ok(_line) = line {
                 if _line.as_str().contains(" : playing") {
                     let mut player_str = _line.as_str().replace(" : playing", "");
-                    player_str = player_str.as_str().split_at(60).1.to_string();
+                    let mut split_value = 49;
+                    if args.time {
+                        split_value = 60;
+                    }
+                    player_str = player_str.as_str().split_at(split_value).1.to_string();
 
                     if !does_pb_player_exits(&pb_players, player_str.clone()) {
                         let res_player = create_new_pb_player(&player_str);
